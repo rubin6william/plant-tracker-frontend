@@ -5,6 +5,7 @@ import React from 'react'
 import Button from '../../components/button'
 import Input from '../../components/input'
 import FileInput from '../../components/file-input'
+import Spinner from '../../components/spinner'
 
 // initialize markdown parser
 const MarkdownIt = require('markdown-it')
@@ -17,12 +18,14 @@ class AddPlant extends React.Component {
       name: '',
       species: '',
       watering_instructions: '',
-      photo: null
+      photo: null,
+      saving: false
     }
 
     this.handleInputChange = this.handleInputChange.bind(this)
     this.handleEditorChange = this.handleEditorChange.bind(this)
     this.handleFileChange = this.handleFileChange.bind(this)
+    this.save = this.save.bind(this)
   }
 
   handleEditorChange({ html, text }) {
@@ -40,8 +43,14 @@ class AddPlant extends React.Component {
 
   handleFileChange(event) {
     this.setState({
-      photo: event.target.files[0]
+      photo: event ?
+        event.target.files[0] :
+        null
     })
+  }
+
+  save() {
+    this.setState({saving: true})
   }
 
   render () {
@@ -77,7 +86,17 @@ class AddPlant extends React.Component {
               <FileInput onChange={this.handleFileChange}></FileInput>
             </div>
 
-            <Button size="sm">Save</Button>
+            <Button size="sm"
+                    disabled={this.state.saving}
+                    onClick={this.save}>
+              {this.state.saving ?
+                (
+                  <>
+                    <Spinner></Spinner> <span>Saving...</span>
+                  </>
+                ) :
+                'Save'}
+            </Button>
           </div>
         </main>
       </>

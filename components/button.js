@@ -9,11 +9,13 @@ class Button extends React.Component {
   render () {
     return (
       <button type="button"
+              disabled={this.props.disabled}
               className={classnames(
                 buttonClasses,
                 {
                   'text-sm': this.props.size === 'sm',
-                  'text-lg': this.props.size === 'lg'
+                  'text-lg': this.props.size === 'lg',
+                  'opacity-75 cursor-not-allowed': this.props.disabled
                 }
               )}
               onClick={() => this.props.onClick()}>
@@ -24,7 +26,12 @@ class Button extends React.Component {
 }
 
 Button.propTypes = {
-  size: PropTypes.oneOf(['sm', 'lg'])
+  size: PropTypes.oneOf(['sm', 'lg']),
+  disabled: PropTypes.bool
+}
+
+Button.defaultProps = {
+  disabled: false
 }
 
 export default Button
