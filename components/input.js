@@ -13,8 +13,9 @@ class Input extends React.Component {
                name={this.props.name}
                id={this.props.id}
                className={classnames(inputClass, {
-                 'error': (this.props.state === false)
+                 'border-red-600': (this.props.state === false)
                })}
+               value={this.props.value}
                placeholder={this.props.placeholder}
                onChange={this.props.onChange}/>
         {this.props.error.length > 0 &&
